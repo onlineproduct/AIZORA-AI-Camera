@@ -7,10 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-
-    permissions:
-      contents: read
+    runs-on: ubuntu-24.04
 
     steps:
       - uses: actions/checkout@v4
@@ -20,16 +17,22 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - uses: android-actions/setup-android@v3
+      - name: Setup Android
+        uses: android-actions/setup-android@v3
+        with:
+          accept-android-sdk-licenses: false
+
+      - name: Accept Licenses
+        run: yes | sdkmanager --licenses
 
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.9'
 
-      - name: Build debug APK
-        run: gradle --no-daemon :app:assembleDebug
+      - name: Build APK
+        run: gradle :app:assembleDebug
 
       - uses: actions/upload-artifact@v4
         with:
-          name: AIZORA-AI-Camera-V1.1-debug
+          name: AIZORA-AI-Camera-APK
           path: app/build/outputs/apk/debug/app-debug.apk
