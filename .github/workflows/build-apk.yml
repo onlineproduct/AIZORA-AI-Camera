@@ -16,8 +16,13 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
+      - name: Locate Android SDK manager
+        run: |
+          SDKMANAGER=$(find "${ANDROID_HOME:-/usr/local/lib/android/sdk}/cmdline-tools" -name sdkmanager -type f | head -n 1)
+          test -n "$SDKMANAGER"
+          echo "$(dirname "$SDKMANAGER")" >> "$GITHUB_PATH"
       - name: Accept Android SDK licenses
-        run: yes | sdkmanager --licenses > /dev/null || true
+        run: yes | sdkmanager --licenses > /dev/null || test "${PIPESTATUS[0]}" -eq 141
       - name: Install Android SDK 35
         run: sdkmanager "platforms;android-35" "build-tools;35.0.0"
       - uses: gradle/actions/setup-gradle@v4
