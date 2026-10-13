@@ -2,7 +2,7 @@ plugins { id("com.android.application") }
 android {
     namespace = "com.aizora.aicamera"
     compileSdk = 35
-    defaultConfig { applicationId = "com.aizora.aicamera"; minSdk = 26; targetSdk = 28; versionCode = 2; versionName = "1.1" }
+    defaultConfig { applicationId = "com.aizora.aicamera"; minSdk = 26; targetSdk = 28; versionCode = 3; versionName = "1.2" }
     compileOptions { sourceCompatibility = JavaVersion.VERSION_17; targetCompatibility = JavaVersion.VERSION_17 }
 }
 dependencies {
